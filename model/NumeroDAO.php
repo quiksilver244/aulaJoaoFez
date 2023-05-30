@@ -42,8 +42,8 @@ class NumeroDAO{
     }
 
     public function selectByNum($numero): Numero|bool
-    {
-        $stmt = $this->pdo->prepare("SELECT * FROM Numero WHERE Numero.numero = :numero");
+    {//
+        $stmt = $this->pdo->prepare("SELECT * FROM `numero` WHERE numero.fk_Rifa_id = :fk_Rifa_id AND numero.fk_Pedido_id = :fk_Pedido_id AND numero.numero = :numero");
         try {
             if($stmt->execute(['numero'=>$numero])){
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
