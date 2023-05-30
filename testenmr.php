@@ -36,7 +36,7 @@
       //var_dump($numero);
 
       $numeroDAO = new NumeroDAO();
-      $numero = $numeroDAO->insert($numero);
+      $numero = $numeroDAO->insert($numero, $fk_Rifa_id);
       // $numero = $numeroDAO->selectByNum(1);
       if($numero){
         var_dump($numero);

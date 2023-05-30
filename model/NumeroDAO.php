@@ -34,18 +34,18 @@ class NumeroDAO{
         ];
         try {
             $stmt->execute($dados);
-            return $this->selectByNum($this->pdo->lastInsertId());
+            return $this->selectByNum($numero->getNumero(),$numero->getRifaId());
         } catch (\PDOException $e) {
             $this->erro = 'Erro ao inserir numero: ' . $e->getMessage();
             return false;
         }
     }
 
-    public function selectByNum($numero): Numero|bool
+    public function selectByNum($numero, $fk_Rifa_id): Numero|bool
     {//
-        $stmt = $this->pdo->prepare("SELECT * FROM `numero` WHERE numero.fk_Rifa_id = :fk_Rifa_id AND numero.fk_Pedido_id = :fk_Pedido_id AND numero.numero = :numero");
+        $stmt = $this->pdo->prepare("SELECT * FROM `numero` WHERE numero.fk_Rifa_id = :fk_Rifa_id AND numero.numero = :numero");
         try {
-            if($stmt->execute(['numero'=>$numero])){
+            if($stmt->execute(['numero'=>$numero, 'fk_Rifa_id'=>$fk_Rifa_id])){
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
                 return (new Numero(true, $row['numero'], $row['fk_Rifa_id'], $row['fk_Pedido_id'], $row['creation_time'], $row['modification_time']));
             }
